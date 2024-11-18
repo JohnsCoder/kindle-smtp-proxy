@@ -11,6 +11,7 @@ import javax.mail.Multipart;
 import javax.mail.internet.InternetAddress;
 
 import proxy.kindle.amazon.EbookAuthorization;
+import proxy.kindle.server.BypassServer;
 import proxy.kindle.smtp.SmtpService;
 import utils.EmailContentHandler;
 
@@ -18,7 +19,13 @@ public class Main {
 
     public static void main(String[] args) {
 //        VerifyContent();
-        new SmtpService().Interceptor();
+        try {
+
+        BypassServer.Boostrap();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 

@@ -79,6 +79,7 @@ public class SmtpService {
     }
 
     public void Interceptor() {
+        System.out.println("Email interceptor on!");
         Properties props = new Properties();
         props.put("mail.smtp.host", System.getenv("IMAP_EMAIL_SERVER_HOST"));
         props.put("mail.smtp.port", System.getenv("IMAP_EMAIL_SERVER_PORT"));
