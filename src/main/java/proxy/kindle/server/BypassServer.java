@@ -38,11 +38,11 @@ public class BypassServer {
 
         // Start the server
         server.start();
+        server.join();
         new SmtpService().Interceptor();
         System.out.println("Server started on port " + port);
 
         // Join the server to keep it running
-        server.join();
 
     }
 }
