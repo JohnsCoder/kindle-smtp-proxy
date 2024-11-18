@@ -1,5 +1,5 @@
 # Use Maven to build the project
-FROM maven:3.8.7-openjdk-17 AS builder
+FROM maven:3.9.8-eclipse-temurin-21-alpine AS builder
 WORKDIR /build
 COPY pom.xml .
 COPY src ./src
