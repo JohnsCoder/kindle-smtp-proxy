@@ -9,4 +9,8 @@ RUN mvn clean package
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=builder /build/target/kindle-smtp-proxy-1.0-SNAPSHOT.jar kindle-smtp-proxy.jar
+
+# Expose port 8080 so the container can communicate on that port
+EXPOSE 8080
+
 CMD ["java", "-jar", "kindle-smtp-proxy.jar"]
