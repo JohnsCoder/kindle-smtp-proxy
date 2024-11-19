@@ -18,7 +18,8 @@ public class Main {
 
     public static void main(String[] args) {
 //        VerifyContent();
-        new SmtpService().Interceptor();
+        SmtpService.Interceptor();
+//        SmtpService.ListFolders();
     }
 
 
@@ -32,7 +33,7 @@ public class Main {
                     System.out.println("new mail: " + email);
                     if (Objects.equals(email, System.getenv("ZLIBRARY_EMAIL"))) {
 
-                        (new SmtpService()).Forward(message, System.getenv("KINDLE_EMAIL"));
+                        SmtpService.Forward(message, System.getenv("KINDLE_EMAIL"));
                     }
 
 //                    if (Objects.equals(email, System.getenv("AMAZON_EMAIL"))) {
@@ -65,8 +66,6 @@ public class Main {
     public static void VerifyContent() {
         String link = "https://www.amazon.com/sendtokindle/verification/confirm/A2Q3Y263D00KWC/162a8579-9529-4b64-95eb-280a98a540c8";
         System.out.println("link atual: " + link);
-        if (link != null) {
-            new EbookAuthorization().OkHttpConnection(link);
-        }
+        new EbookAuthorization().OkHttpConnection(link);
     }
 }

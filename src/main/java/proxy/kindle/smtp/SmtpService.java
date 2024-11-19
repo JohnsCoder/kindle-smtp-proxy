@@ -25,8 +25,7 @@ import utils.EmailContentHandler;
 
 public class SmtpService {
 
-    public void Forward(Message message, String recipient) {
-        System.out.println(recipient);
+    public static void Forward(Message message, String recipient) {
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", System.getenv("SMTP_EMAIL_SERVER_HOST"));
@@ -51,7 +50,7 @@ public class SmtpService {
 
     }
 
-    public void Fetch() {
+    public static void Fetch() {
         Properties props = new Properties();
         props.put("mail.smtp.host", System.getenv("IMAP_EMAIL_SERVER_HOST"));
         props.put("mail.smtp.port", System.getenv("IMAP_EMAIL_SERVER_PORT"));
@@ -78,7 +77,8 @@ public class SmtpService {
 
     }
 
-    public void Interceptor() {
+    public static void Interceptor() {
+        System.out.println("Interceptor on!");
         Properties props = new Properties();
         props.put("mail.smtp.host", System.getenv("IMAP_EMAIL_SERVER_HOST"));
         props.put("mail.smtp.port", System.getenv("IMAP_EMAIL_SERVER_PORT"));
@@ -87,7 +87,7 @@ public class SmtpService {
         try {
             Store store = session.getStore("imaps");
             store.connect(System.getenv("IMAP_EMAIL_SERVER_HOST"), System.getenv("MAIN_EMAIL"), System.getenv("MAIN_APP_PASSWORD"));
-            Folder folder = store.getFolder("INBOX");
+            Folder folder = store.getFolder("Kindle");
             folder.open(2);
             folder.addMessageCountListener(new MessageCountAdapter() {
                 public void messagesAdded(MessageCountEvent e) {
@@ -105,7 +105,7 @@ public class SmtpService {
                 }
 
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException err) {
                     System.out.println(err.getMessage());
                 }
@@ -115,7 +115,32 @@ public class SmtpService {
         }
     }
 
-    public void DebugMail(Message message) {
+    public static void ListFolders() {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", System.getenv("IMAP_EMAIL_SERVER_HOST"));
+        props.put("mail.smtp.port", System.getenv("IMAP_EMAIL_SERVER_PORT"));
+        Session session = Session.getInstance(props, null);
+
+        try {
+            Store store = session.getStore("imaps");
+            store.connect(System.getenv("IMAP_EMAIL_SERVER_HOST"), System.getenv("MAIN_EMAIL"), System.getenv("MAIN_APP_PASSWORD"));
+            Folder[] folder = store.getDefaultFolder().list();
+            for (Folder folder1 : folder) {
+                System.out.println(folder1.getFullName());
+            }
+
+
+
+
+        } catch (MessagingException err) {
+            System.out.println(err.getMessage());
+        }
+
+
+
+    }
+
+    public static void DebugMail(Message message) {
         try {
             Multipart content = (Multipart) message.getContent();
             String text = content.getBodyPart(0).getContent().toString();
